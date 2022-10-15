@@ -64,7 +64,7 @@ const createPlace = async (req, res, next) => {
         description,
         address,
         location: coordinates,
-        image: 'https://eonreality.com/wp-content/uploads/2022/03/NUS-.jpeg',
+        image: req.file.path,
         creator
     });
 

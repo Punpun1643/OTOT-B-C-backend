@@ -16,7 +16,7 @@ const getUser = async (req, res, next) => {
 
 const signup = async (req, res, next) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) {
+    if (!errors.isEmpty()) {        
         return next(new HttpError('Invalid inputs passed, please check your data', 422));
     }
 
@@ -36,7 +36,7 @@ const signup = async (req, res, next) => {
     const createdUser = new User({
         name,
         email,
-        image: 'https://eonreality.com/wp-content/uploads/2022/03/NUS-.jpeg',
+        image: req.file.path,
         password,
         places: []
     })

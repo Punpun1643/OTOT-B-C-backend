@@ -122,6 +122,10 @@ const modifyPlace = async (req, res, next) => {
         return next(error);
     }
 
+    if (place.creator.toString() !== req.userData.userId) {
+        return next(new HttpError('You are not allowed to edit this place!', 403));
+    }
+
     place.title = title;
     place.description = description;
     place.location = coordinates;
@@ -153,6 +157,10 @@ const updatePlace = async (req, res, next) => {
         return next(new HttpError('Something went wrong, could not update place!', 500));
     }
     
+    if (place.creator.toString() !== req.userData.userId) {
+        return next(new HttpError('You are not allowed to edit this place!', 403));
+    }
+
     place.title = title;
     place.description = description;
 
@@ -179,6 +187,10 @@ const deletePlace = async (req, res, next) => {
     // check whether place actually exists
     if (!place) {
         return next(new HttpError('Could not find place for this id', 404));
+    }
+
+    if (place.creator.id !== req.userData.userId) {
+        return next(new HttpError('You are not allowd to delete this place!', 403));
     }
 
     const imagePath = place.image;

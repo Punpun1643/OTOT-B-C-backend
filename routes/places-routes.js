@@ -3,12 +3,17 @@ const { check } = require('express-validator');
 
 const placeControllers = require('../controllers/places-controller');
 const fileUpload = require('../middleware/file-upload');
+const checkAuth = require('../middleware/check-auth');
 
 const router = express.Router();
 
+// open to all users
 router.get('/:pid', placeControllers.getPlaceById);
 
 router.get('/user/:uid', placeControllers.getPlacesByUserId);
+
+// limit to requests with valid token
+router.use(checkAuth);
 
 router.post('/',
     fileUpload.single('image'),
@@ -20,6 +25,7 @@ router.post('/',
     placeControllers.createPlace
 );
 
+// update PUT
 router.put('/:pid', 
     [
         check('title').not().isEmpty(),
@@ -30,6 +36,7 @@ router.put('/:pid',
     placeControllers.modifyPlace
 );
 
+// update PATCH
 router.patch('/:pid', 
     [
         check('title').not().isEmpty(),
@@ -38,6 +45,7 @@ router.patch('/:pid',
     placeControllers.updatePlace
 );
 
+// delete
 router.delete('/:pid', placeControllers.deletePlace);
 
 module.exports = router;

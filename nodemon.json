@@ -1,0 +1,9 @@
+{
+    "env": {
+        "DB_USER": "lightbulbed16",
+        "DB_PASSWORD": "ZwVeFbpfE6wXEMBT",
+        "DB_NAME": "otot-b3-c-backend",
+        "GOOGLE_API_KEY": "AIzaSyAdhvoEg1TPe2uncqqyKNO-6PUf8li2Chw",
+        "JWT_KEY": "confidential"
+    }
+}

@@ -31,6 +31,11 @@ const getPlacesByUserId = async (req, res, next) => {
     const userId = req.params.uid;
 
     let places;
+
+    if (userId !== req.userData.userId) {
+        return next(new HttpError('You are not allowed to to enter this place that is not yours!', 403));
+    }
+
     try {
         places = await Place.find({ creator: userId });
     } catch (err) {

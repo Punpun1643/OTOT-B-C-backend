@@ -12,6 +12,8 @@ const HttpError = require('./models/http-error');
 const app = express();
 
 app.use(bodyParser.json());
+//add
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/uploads/images', express.static(path.join('uploads', 'images')));
 
@@ -47,7 +49,17 @@ app.use((error, req, res, next) => {
     res.status(error.code || 500).json({ message: error.message || 'An unknown error occurred!' });  
 })
 
-mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.m5ycrum.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`).then(() => {
+// mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.m5ycrum.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`).then(() => {
+//     app.listen(process.env.PORT || 8000, () => {
+//         console.log('listening at port 8000...')
+//     });
+    
+// }).catch(err => {
+//     console.log(err);
+// });
+
+// dev
+mongoose.connect('mongodb+srv://lightbulbed16:ZwVeFbpfE6wXEMBT@cluster0.m5ycrum.mongodb.net/otot-b3-c-backend?retryWrites=true&w=majority').then(() => {
     app.listen(process.env.PORT || 8000, () => {
         console.log('listening at port 8000...')
     });
@@ -55,3 +67,5 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD
 }).catch(err => {
     console.log(err);
 });
+
+module.exports = app;

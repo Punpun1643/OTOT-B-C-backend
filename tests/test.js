@@ -2,6 +2,8 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../app');
 const { expect } = require('chai');
+var superagent = require('superagent');
+var agent = superagent.agent();
 
 chai.use(chaiHttp);
 chai.should();
@@ -60,47 +62,52 @@ describe('places', () => {
         });
     });
 
-    // describe('POST a place', () => {
-    //     let validUser = {
-    //         email: "testing123@gmail.com",
-    //         password: "testing123"
-    //     }
+    describe('PUT a place', () => {
+        let validUser = {
+            email: "testing123@gmail.com",
+            password: "testing123"
+        }
 
-    //     before((done) => {
-    //         chai.request(app)
-    //         .post('/api/users/login')
-    //         .send(validUser, (err) => {
-    //             done();
-    //         })      
-    //     });
+        let validNewPlace = {
+            location: {lat:1.2943438,lng:103.7727616},
+            title:"NUS",
+            description:"NUS Computing", 
+            address:"Computing Drive, National University Of Singapore, 119077",
+            creator:"634ba089c9940527f9d4f9e9"
+        }
 
-        
-    //     it('request to add a place with all valid inputs should be successful', (done) => {
-    //         let validPlace = {
-    //             title: "RVRC",
-    //             description: "RVRC place",
-    //             address: "25 Lower Kent Ridge Rd F636"
-    //         }
-    //         chai.request(app)
-    //             .post('/api/places')
-    //             .send(validPlace)
-    //             .end((err, res) => {
-    //                 res.should.have.status(200);
-    //                 done();
-    //             });
+        it('request to add a place with all valid inputs should be successful', (done) => {
+            chai.request(app)
+                .post('/api/users/login')
+                .send(validUser)
+                .end((err, res) => {
+                    res.body.should.have.property('token');
+                    var token = res.body.token;
+                    var id = '6356a90105d6de707dce7e5e'
+                    chai.request(app)
+                        .put(`/api/places/${id}`)
+                        .send(validNewPlace)
+                        .set('Authorization', 'Bearer ' + token)
+                        .end((err, res) => {
+                            res.should.have.status(200);
+                            done();
+                        });
+                });
+                
+        });
        
-    // });
+    });
 
 });
 
 describe('users', () => {
-    describe('login', () => {
+    describe('POST login', () => {
         let validUser = {
             email: 'testing123@gmail.com',
             password: 'testing123'
         }
 
-        it('invalid username and password should not login successfully', (done) => {
+        it('valid username and password should login successfully', (done) => {
 
             chai.request(app)
                 .post('/api/users/login')

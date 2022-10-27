@@ -76,14 +76,14 @@ describe('places', () => {
             creator:"634ba089c9940527f9d4f9e9"
         }
 
-        it('request to add a place with all valid inputs should be successful', (done) => {
+        it('request to edit a valid place with a valid new place information should be successful', (done) => {
             chai.request(app)
                 .post('/api/users/login')
                 .send(validUser)
                 .end((err, res) => {
                     res.body.should.have.property('token');
                     var token = res.body.token;
-                    var id = '6356a90105d6de707dce7e5e'
+                    var id = '6356a90105d6de707dce7e5e';
                     chai.request(app)
                         .put(`/api/places/${id}`)
                         .send(validNewPlace)
@@ -96,6 +96,31 @@ describe('places', () => {
                 
         });
        
+    });
+
+    describe('DELETE a place', () => {
+        let validUser = {
+            email: "testing123@gmail.com",
+            password: "testing123"
+        }
+
+        it ('request to delete a valid place should be successful', () => {
+            chai.request(app)
+                .post('/api/users/login')
+                .send(validUser)
+                .end((err, res) => {
+                    res.body.should.have.property('token');
+                    var token = res.body.token;
+                    var id = '6356a90105d6de707dce7e5e';
+                    chai.request(app)
+                        .delete(`/api/places/${id}`)
+                        .set('Authorization', 'Bearer ' + token)
+                        .end((err, res) => {
+                            res.should.have.status(200);
+                            done();
+                        })
+                });
+        });
     });
 
 });

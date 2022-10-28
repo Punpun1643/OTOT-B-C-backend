@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha tests/*.js --exit -r dotenv/config",
+    "test": "mocha tests/*.js --exit --timeout 20000 -r dotenv/config --timeout",
     "start": "serve -s build"
   },
   "author": "",

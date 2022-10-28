@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha tests/*.js --exit --timeout 20000 -r dotenv/config",
-    "start": "serve -s build"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",

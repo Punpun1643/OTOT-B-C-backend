@@ -35,10 +35,10 @@ jobs:
         with:
           aws_access_key: ${{secrets.AWS_ACCESS_KEY_ID}}
           aws_secret_key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-          application_name: "test-node-cd"
-          environment_name: "test-node-cd"
+          application_name: "test-node-cd-new"
+          environment_name: "test-node-cd-new"
           region: "ap-southeast-1"
           version_label: "react-demo-new-${{ steps.format-time.outputs.replaced }}"
-          # deployment_package: deploy.zip
+          deployment_package: deploy.zip
       - name: Deployed!
         run: echo App deployed to ELB

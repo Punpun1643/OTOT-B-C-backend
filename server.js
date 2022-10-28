@@ -9,9 +9,13 @@ const placesRoutes = require('./routes/places-routes');
 const usersRoutes = require('./routes/users-routes');
 const HttpError = require('./models/http-error');
 
+require('dotenv').config();
+
 const app = express();
 
 app.use(bodyParser.json());
+//add
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/uploads/images', express.static(path.join('uploads', 'images')));
 
@@ -55,3 +59,15 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD
 }).catch(err => {
     console.log(err);
 });
+
+// dev
+// mongoose.connect('mongodb+srv://lightbulbed16:ZwVeFbpfE6wXEMBT@cluster0.m5ycrum.mongodb.net/otot-b3-c-backend?retryWrites=true&w=majority').then(() => {
+//     app.listen(process.env.PORT || 8000, () => {
+//         console.log('listening at port 8000...')
+//     });
+    
+// }).catch(err => {
+//     console.log(err);
+// });
+
+module.exports = app;

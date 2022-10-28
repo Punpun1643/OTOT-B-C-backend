@@ -87,6 +87,7 @@ jobs:
           region: "ap-southeast-1"
           version_label: "version-label-${{ steps.format-time.outputs.replaced }}"
           deployment_package: deploy.zip
+          use_existing_version_if_available: true
 
       - name: Deployed!
         run: echo App deployed to ELB

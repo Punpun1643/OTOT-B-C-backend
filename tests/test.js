@@ -83,7 +83,7 @@ describe('places', () => {
                 .end((err, res) => {
                     res.body.should.have.property('token');
                     var token = res.body.token;
-                    var id = '6356a90105d6de707dce7e5e';
+                    var id = '635a5a3ffb716bf55a6ac74e';
                     chai.request(app)
                         .put(`/api/places/${id}`)
                         .send(validNewPlace)
